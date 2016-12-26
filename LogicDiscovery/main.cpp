@@ -32,7 +32,7 @@ void Init()
 							 RCC_AHB1Periph_GPIOC | RCC_AHB1Periph_GPIOD |
 							 RCC_AHB1Periph_GPIOE | RCC_AHB1Periph_GPIOF |
 							 RCC_AHB1Periph_GPIOG | RCC_AHB1Periph_GPIOH , ENABLE);
-	RCC_AHB3PeriphClockCmd(RCC_AHB3Periph_FSMC, ENABLE);
+	RCC_AHB3PeriphClockCmd(RCC_AHB3Periph_FMC, ENABLE);
 
 	// FSMC GPIO configuration
 #ifdef SAMPLING_FSMC

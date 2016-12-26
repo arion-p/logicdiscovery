@@ -53,6 +53,8 @@
 #define USB_SIZ_DEVICE_DESC                     18
 #define USB_SIZ_STRING_LANGID                   4
 
+#define  USB_SIZ_STRING_SERIAL                  0x1A
+
 /**
   * @}
   */ 

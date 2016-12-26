@@ -2,13 +2,13 @@
   ******************************************************************************
   * @file    usbd_cdc_vcp.c
   * @author  MCD Application Team
-  * @version V1.1.0
-  * @date    19-March-2012
+  * @version V1.2.0
+  * @date    09-November-2015
   * @brief   Generic media access Layer.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT 2015 STMicroelectronics</center></h2>
   *
   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
   * You may not use this file except in compliance with the License.
@@ -64,7 +64,6 @@ static uint16_t VCP_DeInit   (void);
 static uint16_t VCP_Ctrl     (uint32_t Cmd, uint8_t* Buf, uint32_t Len);
 static uint16_t VCP_DataTx   (uint8_t* Buf, uint32_t Len);
 static uint16_t VCP_DataRx   (uint8_t* Buf, uint32_t Len);
-uint16_t VCP_ByteTx (uint8_t dataByte);
 
 static uint16_t VCP_COMConfig(uint8_t Conf);
 
@@ -82,7 +81,7 @@ CDC_IF_Prop_TypeDef VCP_fops =
   * @brief  VCP_Init
   *         Initializes the Media on the STM32
   * @param  None
-  * @retval Result of the opeartion (USBD_OK in all cases)
+  * @retval Result of the operation (USBD_OK in all cases)
   */
 static uint16_t VCP_Init(void)
 {
@@ -116,7 +115,7 @@ static uint16_t VCP_Init(void)
 //  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
 //  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 //  NVIC_Init(&NVIC_InitStructure);
-  
+
   return USBD_OK;
 }
 
@@ -124,7 +123,7 @@ static uint16_t VCP_Init(void)
   * @brief  VCP_DeInit
   *         DeInitializes the Media on the STM32
   * @param  None
-  * @retval Result of the opeartion (USBD_OK in all cases)
+  * @retval Result of the operation (USBD_OK in all cases)
   */
 static uint16_t VCP_DeInit(void)
 {
@@ -139,7 +138,7 @@ static uint16_t VCP_DeInit(void)
   * @param  Cmd: Command code            
   * @param  Buf: Buffer containing command data (request parameters)
   * @param  Len: Number of data to be sent (in bytes)
-  * @retval Result of the opeartion (USBD_OK in all cases)
+  * @retval Result of the operation (USBD_OK in all cases)
   */
 static uint16_t VCP_Ctrl (uint32_t Cmd, uint8_t* Buf, uint32_t Len)
 { 
@@ -190,8 +189,8 @@ static uint16_t VCP_Ctrl (uint32_t Cmd, uint8_t* Buf, uint32_t Len)
 
   case SEND_BREAK:
     /* Not  needed for this driver */
-    break;    
-    
+    break;
+
   default:
     break;
   }
@@ -205,14 +204,14 @@ static uint16_t VCP_Ctrl (uint32_t Cmd, uint8_t* Buf, uint32_t Len)
   *         this function.
   * @param  Buf: Buffer of data to be sent
   * @param  Len: Number of data to be sent (in bytes)
-  * @retval Result of the opeartion: USBD_OK if all operations are OK else VCP_FAIL
+  * @retval Result of the operation: USBD_OK if all operations are OK else VCP_FAIL
   */
 static uint16_t VCP_DataTx (uint8_t* Buf, uint32_t Len)
 {
-	for(int i = 0; i < Len; i++)
-	{
-		VCP_ByteTx(Buf[i]);
-	}
+  for(int i = 0; i < Len; i++)
+  {
+    VCP_ByteTx(Buf[i]);
+  }
 //  if (linecoding.datatype == 7)
 //  {
 //    APP_Rx_Buffer[APP_Rx_ptr_in] = USART_ReceiveData(EVAL_COM1) & 0x7F;
@@ -229,11 +228,11 @@ static uint16_t VCP_DataTx (uint8_t* Buf, uint32_t Len)
 //  {
 //    APP_Rx_ptr_in = 0;
 //  }
-  
+
   return USBD_OK;
 }
 
-uint16_t VCP_ByteTx (uint8_t dataByte)
+uint16_t VCP_ByteTx(uint8_t dataByte)
 {
   APP_Rx_Buffer[APP_Rx_ptr_in] = dataByte;
   APP_Rx_ptr_in++;
@@ -244,7 +243,7 @@ uint16_t VCP_ByteTx (uint8_t dataByte)
     APP_Rx_ptr_in = 0;
   }
 
-  return USBD_OK;
+return USBD_OK;
 }
 
 
@@ -255,18 +254,17 @@ uint16_t VCP_ByteTx (uint8_t dataByte)
   *           
   *         @note
   *         This function will block any OUT packet reception on USB endpoint 
-  *         untill exiting this function. If you exit this function before transfer
+  *         until exiting this function. If you exit this function before transfer
   *         is complete on CDC interface (ie. using DMA controller) it will result 
   *         in receiving more data while previous ones are still not sent.
   *                 
-  * @param  Buf: Buffer of data to be received
+  * @param  Buf: Buffer of data received
   * @param  Len: Number of data received (in bytes)
-  * @retval Result of the opeartion: USBD_OK if all operations are OK else VCP_FAIL
+  * @retval Result of the operation: USBD_OK if all operations are OK else VCP_FAIL
   */
-
 static uint16_t VCP_DataRx (uint8_t* Buf, uint32_t Len)
 {
-  char text[40];
+  //char text[40];
 //  for (i = 0; i < Len; i++)
 //  {
 //    USART_SendData(EVAL_COM1, *(Buf + i) );
@@ -274,17 +272,17 @@ static uint16_t VCP_DataRx (uint8_t* Buf, uint32_t Len)
 //  }
   if(Len == 1)
   {
-	  //sprintf(text, "%x     ", Buf[0]);
-	  //GUI_Text(0, 0, (uint8_t*)text, Green, Black);
+    //sprintf(text, "%x     ", Buf[0]);
+    //GUI_Text(0, 0, (uint8_t*)text, Green, Black);
   }
   else
   {
-	  //sprintf(text, "%d:%x  ", Len, Buf[0]);
-	  //GUI_Text(0, 0, (uint8_t*)text, Green, Black);
+    //sprintf(text, "%d:%x  ", Len, Buf[0]);
+    //GUI_Text(0, 0, (uint8_t*)text, Green, Black);
   }
 
   SumpProcessRequest(Buf, Len);
- 
+
   return USBD_OK;
 }
 
@@ -314,7 +312,7 @@ static uint16_t VCP_COMConfig(uint8_t Conf)
     USART_InitStructure.USART_Parity = USART_Parity_Odd;
     USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
     USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
-    
+
 //    /* Configure and enable the USART */
 //    STM_EVAL_COMInit(COM1, &USART_InitStructure);
 //
@@ -384,8 +382,8 @@ static uint16_t VCP_COMConfig(uint8_t Conf)
     USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
     USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
     
-    /* Configure and enable the USART */
-    //STM_EVAL_COMInit(COM1, &USART_InitStructure);
+//    /* Configure and enable the USART */
+//    STM_EVAL_COMInit(COM1, &USART_InitStructure);
   }
   return USBD_OK;
 }
@@ -401,7 +399,7 @@ void EVAL_COM_IRQHandler(void)
 //  if (USART_GetITStatus(EVAL_COM1, USART_IT_RXNE) != RESET)
 //  {
 //    /* Send the received data to the PC Host*/
-//    VCP_DataTx (0,0);
+//    VCP_DataTx ();
 //  }
 //
 //  /* If overrun condition occurs, clear the ORE flag and recover communication */

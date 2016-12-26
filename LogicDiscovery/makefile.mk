@@ -13,7 +13,7 @@
 # Modified for the STM32F4 devices
 # by Flexz, 2011
 #
-# based on the WinAVR makefile written by Eric B. Weddington, Jörg Wunsch, et al.
+# based on the WinAVR makefile written by Eric B. Weddington, JÃ¶rg Wunsch, et al.
 # Released to the Public Domain
 # Please read the make user manual!
 #
@@ -42,8 +42,8 @@ DENSITY  = STM32F20X
 
 # must be yes - only THUMB2 on M3 no ARM:
 USE_THUMB_MODE = YES
-PALTFORM = ./platform/stm32f4
-#PALTFORM = ./platform/stm32f4_150MHz
+PLATFORM = ./platform/stm32f4
+#PLATFORM = ./platform/stm32f4_150MHz
 
 ## Exception-Vector placement not used so far in M3-examples
 ## (placement settings ignored when using "RAM_RUN")
@@ -88,7 +88,7 @@ CPPSRCARM =
 # Even though the DOS/Win* filesystem matches both .s and .S the same,
 # it will preserve the spelling of the filenames, and gcc itself does
 # care about how the name is spelled on its command-line.
-ASRC = $(PALTFORM)/startup.S
+ASRC = $(PLATFORM)/startup.S
 
 # List Assembler source files here which must be assembled in ARM-Mode..
 ASRCARM  = 
@@ -123,28 +123,33 @@ LINKERSCRIPTPATH = ./
 # list some places to look for source files (PH May 2009)
 # the ST peripheral driver library sources must be findable
 #STLIBS   = G:/Work/ST/libs
-LIBSTM32 = $(STLIBS)/STM32F4xx_DSP_StdPeriph_Lib_V1.0.1/Libraries
+#LIBSTM32 = $(STLIBS)/STM32F4xx_DSP_StdPeriph_Lib_V1.0.1/Libraries
+LIBSTM32 = $(STLIBS)/STM32F4xx_DSP_StdPeriph_Lib_V1.8.0/Libraries
 #CM3      = $(LIBSTM32)/CMSIS/CM3/CoreSupport
 CM4      = $(LIBSTM32)/CMSIS
 CM3_DEV  = $(LIBSTM32)/CMSIS/Device/ST/STM32F4xx
-DRIVERS  = $(LIBSTM32)/STM32F4xx_StdPeriph_Driver
-STARTUP  = $(LIBSTM32)/CMSIS/Core/CM3/startup/gcc
+#DRIVERS  = $(LIBSTM32)/STM32F4xx_StdPeriph_Driver
+DRIVERS  = $(STLIBS)/stm32f469i-disco_stdperiph_lib/StdPeriph_Driver
+#STARTUP  = $(LIBSTM32)/CMSIS/Core/CM3/startup/gcc
+STARTUP  = ./platform/stm32f4/startup
 #USBCL 	 = ./usb/raw
 USBCL 	 = ./usb/vcp
 LA       = ./la
-USBOTG   = $(STLIBS)/STM32_USB-Host-Device_Lib_V2.1.0/Libraries/STM32_USB_OTG_Driver
-USBLIB   = $(STLIBS)/STM32_USB-Host-Device_Lib_V2.1.0/Libraries/STM32_USB_Device_Library/Core
+#USBOTG   = $(STLIBS)/STM32_USB-Host-Device_Lib_V2.1.0/Libraries/STM32_USB_OTG_Driver
+#USBLIB   = $(STLIBS)/STM32_USB-Host-Device_Lib_V2.1.0/Libraries/STM32_USB_Device_Library/Core
+USBOTG   = $(STLIBS)/STM32_USB-Host-Device_Lib_V2.2.0/Libraries/STM32_USB_OTG_Driver
+USBLIB   = $(STLIBS)/STM32_USB-Host-Device_Lib_V2.2.0/Libraries/STM32_USB_Device_Library/Core
 ONBOARD  = ./onboard
 #BOOST	 = D:/Stuff/boost
 
 #vpath %.S $(LIBSPEEX)/STM32/libspeex/gcc
-vpath %.c $(DRIVERS)/src $(USBCL) $(USBCDC)/src $(USBOTG)/src $(CM3) $(CM3_DEV) $(STARTUP) ./print $(USBLIB)/src $(PALTFORM) ./lcd ./camera
+vpath %.c $(DRIVERS)/src $(USBCL) $(USBCDC)/src $(USBOTG)/src $(CM3) $(CM3_DEV) $(STARTUP) ./print $(USBLIB)/src $(PLATFORM) ./lcd ./camera
 vpath %.cpp ./print $(USBLIB)/src ./user $(USBCL) ./board $(MODS) $(LA)
 
 # List any extra directories to look for include files here.
 # Each directory must be separated by a space.
 # Make sure we can find the peripheral driver library include files (PH May 2009)
-EXTRAINCDIRS = $(DRIVERS)/inc $(USBCL) $(USBLIB)/inc $(USBCDC)/inc $(USBOTG)/inc $(CM3) $(CM3_DEV)/Include $(SVDLIB)  ./print $(PALTFORM) $(CM4)/Include ./lcd $(LA)
+EXTRAINCDIRS = $(DRIVERS)/inc $(USBCL) $(USBLIB)/inc $(USBCDC)/inc $(USBOTG)/inc $(CM3) $(CM3_DEV)/Include $(SVDLIB)  ./print $(PLATFORM) $(CM4)/Include ./lcd $(LA)
 
 # List any extra directories to look for library files here.
 # Each directory must be separated by a space.
@@ -408,7 +413,7 @@ endif
 	@echo
 	@echo $(MSG_FLASH) $@
 	$(OBJCOPY) -O $(FORMAT) $< $@
-	
+
 # Create final output file (.bin) from ELF output file.
 %.bin: %.elf
 	@echo

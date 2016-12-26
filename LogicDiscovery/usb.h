@@ -7,8 +7,12 @@
 
 #ifndef USB_H_
 #define USB_H_
-
+#ifdef __cplusplus
+    extern "C" {
+#endif
 #include "usb_bsp.h"
+
+
 
 typedef void	(*usbTrnansferDoneCallback)(void);
 struct ExternalTransferUnit
@@ -33,4 +37,7 @@ void	usbStartExternalTransfer(usbExternalTransferCallback callback);
 //extern "C" void USB_HP_CAN1_TX_IRQHandler(void);
 //extern "C" void USB_LP_CAN1_RX0_IRQHandler(void);
 
+#ifdef __cplusplus
+  }
+#endif
 #endif /* USB_H_ */

@@ -51,11 +51,13 @@ typedef struct
 /* Exported constants --------------------------------------------------------*/
 /* The following define is used to route the USART IRQ handler to be used.
    The IRQ handler function is implemented in the usbd_cdc_vcp.c file. */
-          
+
 #ifdef USE_STM3210C_EVAL
  #define EVAL_COM_IRQHandler            USART2_IRQHandler
+#elif defined(USE_STM324x9I_EVAL)
+ #define EVAL_COM_IRQHandler            USART1_IRQHandler
 #else
- #define EVAL_COM_IRQHandler            USART3_IRQHandler  
+#define EVAL_COM_IRQHandler            USART3_IRQHandler
 #endif /* USE_STM322xG_EVAL */
 
 
@@ -64,6 +66,9 @@ typedef struct
 
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
+void EVAL_COM_IRQHandler(void);
+
+uint16_t VCP_ByteTx(uint8_t dataByte);
 
 #endif /* __USBD_CDC_VCP_H */
 

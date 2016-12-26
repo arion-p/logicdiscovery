@@ -7,6 +7,10 @@
 
 
 //#include "bsp/bsp.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "usb.h"
 #include "misc.h"
 #include "nvic.h"
@@ -19,6 +23,10 @@
 //#include "usb_conf.h"
 #include "usb_dcd_int.h"
 #include "usbd_usr.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 extern "C" void	OTG_FS_IRQHandler(void);
 extern "C" void OTG_HS_IRQHandler(void);

@@ -20,7 +20,7 @@
 //Port C: C0 nEnable of STMPS2141STR. C3 output form mic.
 //Port D: D5 has pull-up and led, connected nFault of STMPS2141STR. D12-15 connected to color LEDs <- looks safe
 //Port E: E0,E1 - active low from LIS302DL, non-usable
-#define SAMPLING_PORT GPIOD
+#define SAMPLING_PORT GPIOA
 //enable manual trigger by user-button
 #define SAMPLING_MANUAL
 //RLE mode only Enable forcing highest sampled bit to output zero. If disabled - this bit has to be
